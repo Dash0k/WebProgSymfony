@@ -9,12 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/blog/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/blog/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+    <a href="{{ path('app_article_new') }}" class="btn btn-default">Создать статью</a>
+    {% for item in articles %}
+        <article>
+            <h2>{{ item.title }}</h2>
+            <div class="article-content">
+                {{ item.body }}
+            </div>
+            <div>
+                Дата создания: {{ item.createdAt|date('d.m.Y H:i:s') }}
+            </div>
+        </article>
+    {% endfor %}
 </div>
 {% endblock %}

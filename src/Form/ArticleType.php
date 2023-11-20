@@ -14,9 +14,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('title')
             ->add('body')
-            ->add('createdAt')
-            ->add('author')
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

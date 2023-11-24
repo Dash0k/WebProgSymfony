@@ -9,15 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-    <a href="{{ path('app_article_new') }}" class="btn btn-default">Создать статью</a>
+    <a href="{{ path('admin.index') }}">Администрирование</a>
     {% for item in articles %}
         <article>
             <h2>{{ item.title }}</h2>
+            <a href="{{ path('app_article_edit', {'id': item.id}) }}">Редактировать</a>
             <div class="article-content">
-                {{ item.body }}
+                {{ item.body|raw|nl2br }}
             </div>
             <div>
-                Дата создания: {{ item.createdAt|date('d.m.Y H:i:s') }}
+                Дата создания: {{ item.createdAt|date('d.m.Y H:i:s') }}, Автор: {{ item.author }}
             </div>
         </article>
     {% endfor %}

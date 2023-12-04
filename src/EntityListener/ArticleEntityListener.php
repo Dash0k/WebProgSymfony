@@ -18,7 +18,7 @@ class ArticleEntityListener
         
     }
 
-    public function prePersist(PrePersistEventArgs $event): void
+    public function prePersist(Article $article, PrePersistEventArgs $event): void
     {
         /**@var Article $entity */
         $entity=$event->getObject();

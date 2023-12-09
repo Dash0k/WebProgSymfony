@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Edit Article</h1>
 
-    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('article/_form.html.twig', {'button_label': 'Update'|trans}) }}
 
     <a class="btn btn-secondary" href="{{ path('app_article_index') }}">{{ 'back_to_list'|trans }}</a>
 

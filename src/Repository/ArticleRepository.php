@@ -20,38 +20,20 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
-// Выводим добавленные статьи на главной странице по дате создания (сначала новые)
-    public function getRecentArticles(int $count)
+    public function getRecentArticles(int $count, ?string $search = null): \Doctrine\ORM\Query
     {
-        return $this->createQueryBuilder('article')
-            ->orderBy('article.createdAt', 'desc')
-            ->getQuery()
-            ->setMaxResults($count)
-            ->getResult();
+        $query = $this->createQueryBuilder('q')
+            ->orderBy('q.createdAt', 'desc')
+            ->setMaxResults($count);
+
+
+        if ($search)
+        {
+            $query->andWhere('q.title like :search or q.body like :search')
+            ->setParameter('search', '%'. $search .'%');
+        }
+    
+        return $query->getQuery();
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

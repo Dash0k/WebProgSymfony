@@ -11,6 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 
 class HomeController extends AbstractController
 {
@@ -31,8 +33,18 @@ class HomeController extends AbstractController
             $query = $articleService->getRecentArticles(self::RECENT_ARTICLE_COUNT_ON_HOME);
         }
 
+        $pagerfanta = new Pagerfanta(
+            new QueryAdapter($query)
+        );
+
+        $pagerfanta->setMaxPerPage(1);
+
+        if ($request->query->has('page')) {
+            $pagerfanta->setCurrentPage((int) $request->query->get('page', 1));
+        }
+
         return $this->render('home/index.html.twig', [
-            'articles' => $query->getResult(),
+            'articles' => $pagerfanta,
             'form' => $form,
         ]);
     }

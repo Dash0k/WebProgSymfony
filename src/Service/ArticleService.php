@@ -22,4 +22,9 @@ class ArticleService implements ArticleServiceInterface
 
         return $this->articleRepository->getRecentArticles($count, $search);
     }
+
+    public function getSingleArticleById(int $id): ?Article
+    {
+        return $this->articleRepository->find($id);
+    }
 }

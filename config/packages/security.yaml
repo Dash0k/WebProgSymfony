@@ -13,10 +13,17 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api
+            lazy: true
+            provider: app_user_provider
+            custom_authenticators: App\Security\ApiKeyAuthenticator
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\AppCustomAuthenticator
+            custom_authenticator:
+                - App\Security\AppCustomAuthenticator
+                - App\Security\ApiKeyAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -38,6 +45,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/api, roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: PUBLIC_ACCESS }
 

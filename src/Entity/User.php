@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Article::class, orphanRemoval: true)]
     private Collection $articles;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $apiKey = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -141,5 +144,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return (string) $this->getUserIdentifier();
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?string $apiKey): static
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
     }
 }

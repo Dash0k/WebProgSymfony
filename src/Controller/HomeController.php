@@ -16,7 +16,7 @@ use Pagerfanta\Pagerfanta;
 
 class HomeController extends AbstractController
 {
-    private const RECENT_ARTICLE_COUNT_ON_HOME = 5;
+    private const RECENT_ARTICLE_COUNT_ON_HOME = 30;
 
     #[Route('/', name: 'homepage')]
     public function index(ArticleServiceInterface $articleService, Request $request): Response
@@ -37,7 +37,7 @@ class HomeController extends AbstractController
             new QueryAdapter($query)
         );
 
-        $pagerfanta->setMaxPerPage(1);
+        $pagerfanta->setMaxPerPage(5);
 
         if ($request->query->has('page')) {
             $pagerfanta->setCurrentPage((int) $request->query->get('page', 1));

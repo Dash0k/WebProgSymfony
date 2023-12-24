@@ -17,7 +17,8 @@ security:
             pattern: ^/api
             lazy: true
             provider: app_user_provider
-            custom_authenticators: App\Security\ApiKeyAuthenticator
+            custom_authenticators:
+                - App\Security\ApiKeyAuthenticator
         main:
             lazy: true
             provider: app_user_provider
